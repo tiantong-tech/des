@@ -1,13 +1,20 @@
+using System;
+using Wcs.Plc.Database;
+
 namespace Wcs.Plc
 {
   public interface IContainer
   {
-    IEvent Event { get; }
+    IEvent Event { get; set; }
 
-    IStateDriver StateDriver { get; }
+    Type EventLogger { get; set; }
 
-    IStateManager StateManager { get; }
+    IStateDriver StateDriver { get; set; }
 
-    IIntervalManager IntervalManager { get; }
+    IStateManager StateManager { get; set; }
+
+    IIntervalManager IntervalManager { get; set; }
+
+    Type DbContext { get; set; }
   }
 }

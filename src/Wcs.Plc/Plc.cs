@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Wcs.Plc.Database;
+using Wcs.Plc.DB.Sqlite;
 
 namespace Wcs.Plc
 {
@@ -29,21 +31,46 @@ namespace Wcs.Plc
 
     public Plc()
     {
-      var container = new Container() {
-        Event =  new Event(),
-        StateDriver = new StateTestDriver(),
-        IntervalManager = new IntervalManager(),
-      };
-      container.StateManager = new StateManager(container);
-
-      Container = container;
+      UseContainer();
+      UseStateDriver();
+      UseDbContext();
+      UseEventLogger();
     }
 
     //
 
-    static public IPlcWorker GetWorker()
+    private void UseContainer()
     {
-      return (IPlcWorker)new Plc();
+      Container = new Container();
+      Container.Event = new Event();
+      Container.IntervalManager = new IntervalManager();
+      Container.StateManager = new StateManager(Container);
+    }
+
+    protected virtual void UseEventLogger()
+    {
+      var db = ResolveDbContext();
+      var logger = new EventLogger(db);
+
+      logger.Start();
+      Container.Event.Use(logger);
+    }
+
+    protected virtual void UseStateDriver()
+    {
+      Container.StateDriver = new StateTestDriver();
+    }
+
+    protected virtual void UseDbContext()
+    {
+      Container.DbContext = typeof(SqliteDbContext);
+    }
+
+    public virtual DbContext ResolveDbContext()
+    {
+      var instance = Activator.CreateInstance(Container.DbContext) as SqliteDbContext;
+
+      return instance;
     }
 
     //

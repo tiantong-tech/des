@@ -31,8 +31,8 @@ namespace Wcs.Plc.Test
       var watcher = new Watcher<EventUser>(event_);
       var user = new EventUser() { Id = 1, Name = "test" };
 
-      event_.On<EventUser>("event", user => result = user.Id);
-      watcher.When(user => user.Id == 10).Event("event");
+      event_.On<EventUser>("event", item => result = item.Id);
+      watcher.When(item => item.Id == 10).Event("event");
 
       watcher.Handle(user);
       Assert.AreEqual(result, 0);

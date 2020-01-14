@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Wcs.Plc.Database;
 
 namespace Wcs.Plc
 {
@@ -44,5 +45,7 @@ namespace Wcs.Plc
     Task StopAsync();
 
     void Stop();
+
+    DbContext ResolveDbContext();
   }
 }

@@ -143,9 +143,9 @@ namespace Wcs.Plc.Test
         Assert.AreEqual(data.Name, "yuanfang");
       });
       event_.On<List<EventUser>>("objs", list => {
-        list.ForEach(obj => {
-            Assert.AreEqual(obj.Id, 10);
-            Assert.AreEqual(obj.Name, "yuanfang");
+        list.ForEach(item => {
+            Assert.AreEqual(item.Id, 10);
+            Assert.AreEqual(item.Name, "yuanfang");
         });
       });
 

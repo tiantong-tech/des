@@ -5,6 +5,8 @@ namespace Wcs.Plc
 {
   public interface IEvent
   {
+    void Use(IEventPlugin plugin);
+
     IEventListener On(string key, Action handler);
 
     IEventListener On(string key, Func<Task> handler);

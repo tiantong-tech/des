@@ -19,7 +19,7 @@ namespace Wcs.Plc
 
     private GlobalHandlers _globalHandlers = new GlobalHandlers();
 
-    public void Use(EventPlugin plugin)
+    public void Use(IEventPlugin plugin)
     {
       plugin.Install(this);
     }
@@ -73,7 +73,7 @@ namespace Wcs.Plc
       GetHandlers(key).Remove(id);
     }
 
-    private Task HandleEvent(string key, string payload)
+    private async Task HandleEvent(string key, string payload)
     {
       var tasks = new List<Task>();
       var handlers = GetHandlers(key).Values.ToList();
@@ -91,7 +91,11 @@ namespace Wcs.Plc
         tasks.Add(handler(eventArgs));
       }
 
-      return Task.WhenAll(tasks);
+      try {
+        await Task.WhenAll(tasks);
+      } catch (Exception e) {
+        Console.WriteLine(e);
+      }
     }
 
     public IEventListener All(Func<IEventArgs, Task> handler)
