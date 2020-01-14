@@ -18,7 +18,7 @@ namespace DBCore.Sqlite.Test
       Assert.IsTrue(db.HasTable("roles"));
       Assert.IsFalse(db.HasTable("foo"));
     }
- 
+
     [Test]
     public void TestRollback()
     {

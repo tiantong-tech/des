@@ -2,16 +2,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DBCore.Sqlite
 {
-  public class SqliteContext : DBCore.DbContext
+  public class SqliteBuilder
   {
     private bool _isInMemory = false;
 
     private string _dbFile = "./sqlite.db";
 
-    public SqliteContext UseInMemory()
+    public SqliteBuilder UseInMemory(DbContext db)
     {
       _isInMemory = true;
-      OpenConnection();
+      db.Database.OpenConnection();
 
       return this;
     }
@@ -21,7 +21,7 @@ namespace DBCore.Sqlite
       _dbFile = filePath;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    public void OnConfiguring(DbContextOptionsBuilder options)
     {
       if (_isInMemory) {
         options.UseSqlite("DataSource=:memory:");
@@ -29,13 +29,5 @@ namespace DBCore.Sqlite
         options.UseSqlite($"DataSource=./{_dbFile}");
       }
     }
-
-    public SqliteContext OpenConnection()
-    {
-      Database.OpenConnection();
-
-      return this;
-    }
-
   }
 }

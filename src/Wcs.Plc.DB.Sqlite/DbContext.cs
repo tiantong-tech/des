@@ -1,25 +1,32 @@
 ﻿using System.IO;
-using Wcs.Plc.Entities;
+using DBCore.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Wcs.Plc.DB.Sqlite
 {
-  public class SqliteDbContext : DBCore.Sqlite.SqliteContext
+  public class SqliteDbContext : Wcs.Plc.Database.DbContext
   {
-    public DbSet<EventLog> EventLogs { get; set; }
+    private SqliteBuilder _builder;
 
     public SqliteDbContext()
     {
-      if (!Directory.Exists("./Data/Sqlite")) {
-        Directory.CreateDirectory("./Data/Sqlite");
+      if (!Directory.Exists("./DataSource")) {
+        Directory.CreateDirectory("./DataSource");
       }
 
-      UseDbFile("./DataSource/sqlite.db");
+      _builder = new SqliteBuilder();
+
+      _builder.UseDbFile("./DataSource/sqlite.db");
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public void UseInMemory()
     {
+      _builder.UseInMemory(this);
+    }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    {
+      _builder.OnConfiguring(options);
     }
 
   }

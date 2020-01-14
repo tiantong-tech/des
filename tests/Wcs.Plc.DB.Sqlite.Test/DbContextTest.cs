@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using NUnit.Framework;
 using Wcs.Plc.Entities;
@@ -13,7 +12,7 @@ namespace Wcs.Plc.DB.Sqlite.Test
       var db = new SqliteDbContext();
       var migrator = new Migrator();
 
-      db.UseInMemory();
+      // db.UseInMemory();
       migrator.UseDbContext(db).Migrate();
 
       return db;
