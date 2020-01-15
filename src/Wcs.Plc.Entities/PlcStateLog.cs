@@ -27,6 +27,10 @@ namespace Wcs.Plc.Entities
     [Required]
     public string Key { get; set; }
 
+    [Column("length")]
+    [Required]
+    public int Length { get; set; }
+
     [Column("value")]
     [Required]
     public string Value { get; set; }

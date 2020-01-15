@@ -48,6 +48,7 @@ namespace Wcs.Plc.DB.Sqlite.Test
         Operation = "test",
         Name = "test",
         Key = "D1001",
+        Length = 1,
         Value = "100"
       };
 
@@ -61,23 +62,7 @@ namespace Wcs.Plc.DB.Sqlite.Test
       Assert.AreEqual(1, db.EventLogs.Where(item => item.Key == "key").Count());
       Assert.AreEqual(1, db.PlcConnections.Where(item => item.Name == "lift").Count());
       Assert.AreEqual(1, db.PlcConnectionLogs.Where(item => item.Operation == "test").Count());
-      Assert.AreEqual(1, db.PlcStateLogs.Where(item => item.Operation == "test").Count());
-
-      var data = new PlcConnection {
-        Name = "updated",
-        Model = "updated"
-      };
-
-      var conn = db.PlcConnections.SingleOrDefault(item => item.Id == 1);
-
-      data.Id = conn.Id;
-      conn = data;
-
-      db.SaveChanges();
-
-      conn = db.PlcConnections.SingleOrDefault(item => item.Id == 1);
-
-      Assert.AreEqual("updated", conn.Model);
+      Assert.AreEqual(1, db.PlcStateLogs.Where(item => item.Length == 1).Count());
     }
 
   }
