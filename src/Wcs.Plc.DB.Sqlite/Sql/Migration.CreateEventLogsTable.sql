@@ -2,6 +2,6 @@ CREATE TABLE IF NOT EXISTS "event_logs" (
   "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "key" TEXT NOT NULL,
   "payload" TEXT NOT NULL,
-  "created_at" TEXT NOT NULL,
-  "handler_count" INTEGER NOT NULL
+  "handler_count" INTEGER NOT NULL,
+  "created_at" TEXT NOT NULL
 );

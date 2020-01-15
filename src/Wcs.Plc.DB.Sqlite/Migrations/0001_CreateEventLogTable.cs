@@ -6,12 +6,12 @@ namespace Wcs.Plc.DB.Sqlite
   {
     public void Up(DbContext db)
     {
-      db.ExecuteFromSql("Migration.CreateEventLogTable");
+      db.ExecuteFromSql("Migration.CreateEventLogsTable");
     }
 
     public void Down(DbContext db)
     {
-      db.ExecuteFromSql("Migration.DropEventLogTable");
+      db.ExecuteFromSql("Migration.DropEventLogsTable");
     }
   }
 }

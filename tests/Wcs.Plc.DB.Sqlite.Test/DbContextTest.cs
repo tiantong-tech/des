@@ -12,7 +12,7 @@ namespace Wcs.Plc.DB.Sqlite.Test
       var db = new SqliteDbContext();
       var migrator = new Migrator();
 
-      // db.UseInMemory();
+      db.UseInMemory();
       migrator.UseDbContext(db).Migrate();
 
       return db;
@@ -27,7 +27,7 @@ namespace Wcs.Plc.DB.Sqlite.Test
     }
 
     [Test]
-    public void TestEventLogCURD()
+    public void TestEntity()
     {
       var db = GetInitializedDB();
       var eventLog = new EventLog {
@@ -35,26 +35,49 @@ namespace Wcs.Plc.DB.Sqlite.Test
         Payload = "payload",
         HandlerCount = 0,
       };
+      var plcConnection = new PlcConnection {
+        Model = "melsec-q",
+        Name = "lift",
+      };
+      var plcConnectionLog = new PlcConnectionLog {
+        PlcId = 1,
+        Operation = "test",
+      };
+      var plcStateLog = new PlcStateLog {
+        PlcId = 1,
+        Operation = "test",
+        Name = "test",
+        Key = "D1001",
+        Value = "100"
+      };
 
       db.EventLogs.Add(eventLog);
+      db.PlcConnections.Add(plcConnection);
+      db.PlcConnectionLogs.Add(plcConnectionLog);
+      db.PlcStateLogs.Add(plcStateLog);
       db.SaveChanges();
 
-      var flag = db.EventLogs.Any(item => item.Key == "key");
+      Assert.AreEqual(1, eventLog.Id);
+      Assert.AreEqual(1, db.EventLogs.Where(item => item.Key == "key").Count());
+      Assert.AreEqual(1, db.PlcConnections.Where(item => item.Name == "lift").Count());
+      Assert.AreEqual(1, db.PlcConnectionLogs.Where(item => item.Operation == "test").Count());
+      Assert.AreEqual(1, db.PlcStateLogs.Where(item => item.Operation == "test").Count());
 
-      Assert.IsTrue(flag);
+      var data = new PlcConnection {
+        Name = "updated",
+        Model = "updated"
+      };
 
-      var data = db.EventLogs.Where(item => item.Key == "key").First();
+      var conn = db.PlcConnections.SingleOrDefault(item => item.Id == 1);
 
-      data.Key = "updated";
+      data.Id = conn.Id;
+      conn = data;
+
       db.SaveChanges();
-      flag = db.EventLogs.Any(item => item.Key == "updated");
-      Assert.IsTrue(flag);
 
-      db.EventLogs.Remove(eventLog);
-      db.SaveChanges();
+      conn = db.PlcConnections.SingleOrDefault(item => item.Id == 1);
 
-      flag = db.EventLogs.Any(item => item.Key == "key");
-      Assert.IsFalse(flag);
+      Assert.AreEqual("updated", conn.Model);
     }
 
   }
