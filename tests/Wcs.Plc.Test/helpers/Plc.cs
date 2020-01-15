@@ -9,10 +9,13 @@ namespace Wcs.Plc.Test
   {
     private DbContext _db;
 
+    public Plc()
+    {
+      Name("test").Model("melsec").Host("localhost").Port("1234");
+    }
+
     public override DbContext ResolveDbContext()
     {
-      Console.WriteLine("wtf");
-
       if (_db == null) {
         var db = new SqliteDbContext();
         db.UseInMemory();

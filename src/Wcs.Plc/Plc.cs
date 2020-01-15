@@ -1,13 +1,17 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Wcs.Plc.Database;
+using Wcs.Plc.Entities;
 using Wcs.Plc.DB.Sqlite;
 
 namespace Wcs.Plc
 {
   public class Plc : IPlc
   {
+    public PlcConnection Connection { get; set; } = new PlcConnection();
+
     public IContainer Container { get; set; }
 
     public IEvent Event
@@ -73,25 +77,75 @@ namespace Wcs.Plc
       return instance;
     }
 
+    /// <summary>
+    ///   <para>
+    ///     处理 PlcConnection 信息
+    ///     通过 Id 或 Name，则查询 PlcConnection 信息
+    ///     若通过 Name 无法找到对应信息，则根据当前信息创建 PlcConnection
+    ///   </para>
+    /// </summary>
+    public void ResolvePlcConnection()
+    {
+      var db = ResolveDbContext();
+      var id = Connection.Id;
+      var name = Connection.Name;
+
+      if (id != 0) {
+        var conn = db.PlcConnections.SingleOrDefault(item => item.Id == id);
+
+        if (conn != null) {
+          Connection = conn;
+        }
+      } else if (name != null) {
+        var conn = db.PlcConnections.SingleOrDefault(item => item.Name == name);
+
+        if (conn == null) {
+          db.PlcConnections.Add(Connection);
+        } else {
+          Connection.Id = conn.Id;
+          conn.Host = Connection.Host;
+          conn.Port = Connection.Port;
+          conn.Model = Connection.Model;
+        }
+
+        db.SaveChanges();
+      }
+    }
+
     //
 
-    public IPlcWorker Mode(string mode)
+    public IPlcWorker Id(int id)
     {
+      Connection.Id = id;
+
+      return this;
+    }
+
+    public IPlcWorker Model(string model)
+    {
+      Connection.Model = model;
+
       return this;
     }
 
     public IPlcWorker Name(string name)
     {
+      Connection.Name = name;
+
       return this;
     }
 
     public IPlcWorker Host(string host)
     {
+      Connection.Host = host;
+
       return this;
     }
 
     public IPlcWorker Port(string port)
     {
+      Connection.Port = port;
+
       return this;
     }
 
@@ -196,6 +250,8 @@ namespace Wcs.Plc
 
     public Task RunAsync()
     {
+      ResolvePlcConnection();
+
       _tokenSource = new CancellationTokenSource();
       _task = RunTask().ContinueWith(_ => {
         _task = null;

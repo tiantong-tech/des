@@ -1,11 +1,35 @@
 using System.Linq;
 using NUnit.Framework;
+using Wcs.Plc.Entities;
 
 namespace Wcs.Plc.Test
 {
   [TestFixture]
   public class PlcTest
   {
+    [Test]
+    public void TestResolvePlcConnection()
+    {
+      var plc = new Plc();
+      var db = plc.ResolveDbContext();
+
+      plc.Name("test").Model("melsec").Host("localhost").Port("1234");
+      plc.ResolvePlcConnection();
+
+      var id = plc.Connection.Id;
+
+      Assert.IsTrue(db.PlcConnections.Any(item => item.Id == id));
+
+      plc.Connection = new PlcConnection();
+      plc.Id(id);
+      plc.ResolvePlcConnection();
+
+      Assert.AreEqual(plc.Connection.Port, "1234");
+      Assert.AreEqual(plc.Connection.Name, "test");
+      Assert.AreEqual(plc.Connection.Model, "melsec");
+      Assert.AreEqual(plc.Connection.Host, "localhost");
+    }
+
     [Test]
     public void TestPlcCollectRunStop()
     {
