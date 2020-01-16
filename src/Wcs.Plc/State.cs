@@ -29,6 +29,13 @@ namespace Wcs.Plc
       get => Container.IntervalManager;
     }
 
+    /// <summary>
+    ///   <para>
+    ///     自定义 state name，用来代替 plc 软元件寄存器地址
+    ///   </para>
+    /// </summary>
+    public string Name { get; set; }
+
     public string Key
     {
       get => _key;
@@ -51,6 +58,9 @@ namespace Wcs.Plc
     {
       Container = container;
       ResolveDriver();
+      if (container.StateLogger != null) {
+        Container.StateLogger.Install(this);
+      }
     }
 
     ~State()
@@ -64,6 +74,11 @@ namespace Wcs.Plc
     public void ResolveDriver()
     {
       _stateDriver = Container.StateDriver.Resolve();
+    }
+
+    public void Use(IStatePlugin plugin)
+    {
+      plugin.Install(this);
     }
 
     public S Convert<S>() where S : IState
@@ -133,15 +148,11 @@ namespace Wcs.Plc
     {
       _stateDriver.BeforeMessage(this);
 
-      var tasks = new List<Task>();
-
       await HandleSet(data);
 
       foreach (var hook in _sethooks.Values) {
-        tasks.Add(hook(data));
+        _ = hook(data);
       }
-
-      await Task.WhenAll(tasks);
     }
 
     public void Set(T data)
@@ -153,13 +164,11 @@ namespace Wcs.Plc
     {
       _stateDriver.BeforeMessage(this);
 
-      var tasks = new List<Task>();
       var data = await HandleGet();
 
       foreach (var hook in _gethooks.Values) {
-        tasks.Add(hook(data));
+        _ = hook(data);
       }
-      await Task.WhenAll(tasks);
 
       return data;
     }

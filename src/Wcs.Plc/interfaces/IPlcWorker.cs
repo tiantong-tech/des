@@ -49,5 +49,6 @@ namespace Wcs.Plc
     void Stop();
 
     DbContext ResolveDbContext();
+
   }
 }

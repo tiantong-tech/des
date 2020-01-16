@@ -1,3 +1,5 @@
+using Wcs.Plc.Entities;
+
 namespace Wcs.Plc
 {
   public interface IPlc : IPlcWorker
@@ -9,5 +11,7 @@ namespace Wcs.Plc
     IStateManager StateManager { get; }
 
     IIntervalManager IntervalManager { get; }
+
+    PlcConnection Connection { get; set; }
   }
 }

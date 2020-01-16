@@ -44,35 +44,35 @@ namespace Wcs.Plc
 
     public IWatcher<T> Event(string key)
     {
-      _emmiter = value => _event.Emit(key, value);
+      _emmiter = value => _event.EmitAsync(key, value);
 
       return this;
     }
 
     public IWatcher<T> EventVoid(string key)
     {
-      _emmiter = _ => _event.Emit(key);
+      _emmiter = _ => _event.EmitAsync(key);
 
       return this;
     }
 
     public IWatcher<T> Event<R>(string key, R payload)
     {
-      _emmiter = _ => _event.Emit<R>(key, payload);
+      _emmiter = _ => _event.EmitAsync<R>(key, payload);
 
       return this;
     }
 
     public IWatcher<T> Event(string key, Func<T, T> handler)
     {
-      _emmiter = value => _event.Emit(key, handler(value));
+      _emmiter = value => _event.EmitAsync(key, handler(value));
 
       return this;
     }
 
     public IWatcher<T> Event<R>(string key, Func<T, R> handler)
     {
-      _emmiter = value => _event.Emit<R>(key, handler(value));
+      _emmiter = value => _event.EmitAsync<R>(key, handler(value));
 
       return this;
     }

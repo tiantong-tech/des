@@ -18,6 +18,8 @@ namespace Wcs.Plc
       return container;
     }
 
+    public IPlc Plc { get; set; }
+
     public IEvent Event { get; set; }
 
     public Type EventLogger { get; set; }
@@ -29,5 +31,7 @@ namespace Wcs.Plc
     public IIntervalManager IntervalManager { get; set; }
 
     public Type DbContext { get; set; }
+
+    public StateLogger StateLogger { get; set; }
   }
 }

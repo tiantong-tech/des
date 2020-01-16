@@ -1,4 +1,3 @@
-using System.Diagnostics.Contracts;
 using System;
 using Wcs.Plc.Database;
 using Wcs.Plc.DB.Sqlite;
@@ -31,13 +30,12 @@ namespace Wcs.Plc.Test
 
     protected override void UseEventLogger()
     {
-      var db = ResolveDbContext();
-      var logger = new EventLogger(db);
 
-      logger.LogInterval = 0;
-      logger.Start();
+    }
 
-      Container.Event.Use(logger);
+    protected override void UseStateLogger()
+    {
+
     }
   }
 }

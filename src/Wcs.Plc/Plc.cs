@@ -39,6 +39,7 @@ namespace Wcs.Plc
       UseStateDriver();
       UseDbContext();
       UseEventLogger();
+      UseStateLogger();
     }
 
     //
@@ -46,6 +47,7 @@ namespace Wcs.Plc
     private void UseContainer()
     {
       Container = new Container();
+      Container.Plc = this;
       Container.Event = new Event();
       Container.IntervalManager = new IntervalManager();
       Container.StateManager = new StateManager(Container);
@@ -56,8 +58,22 @@ namespace Wcs.Plc
       var db = ResolveDbContext();
       var logger = new EventLogger(db);
 
-      logger.Start();
+      _ = logger.StartAsync();
       Container.Event.Use(logger);
+    }
+
+    /// <smmary>
+    ///   <para>
+    ///     将 StateLogger 添加至 Container 中，并开始执行记录
+    ///   </para>
+    /// </summary>
+    protected virtual void UseStateLogger()
+    {
+      var db = ResolveDbContext();
+      var logger = new StateLogger(db, Connection);
+
+      Container.StateLogger = logger;
+      _ = logger.StartAsync();
     }
 
     protected virtual void UseStateDriver()

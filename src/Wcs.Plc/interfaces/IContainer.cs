@@ -5,6 +5,8 @@ namespace Wcs.Plc
 {
   public interface IContainer
   {
+    IPlc Plc { get; set; }
+
     IEvent Event { get; set; }
 
     Type EventLogger { get; set; }
@@ -16,5 +18,7 @@ namespace Wcs.Plc
     IIntervalManager IntervalManager { get; set; }
 
     Type DbContext { get; set; }
+
+    StateLogger StateLogger { get; set; }
   }
 }

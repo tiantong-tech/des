@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -183,6 +184,25 @@ namespace Wcs.Plc.Test
         }
       });
       event_.Emit("arr", arr);
+    }
+
+    [Test]
+    public void TestEventLogger()
+    {
+      var plc = new Plc();
+      var event_ = new Event();
+      var db = plc.ResolveDbContext();
+      var logger = new EventLogger(db);
+
+      logger.LogInterval = 1;
+      _ = logger.StartAsync();
+      event_.Use(logger);
+      event_.On<int>("event", _ => {});
+      event_.Emit<int>("event", 0);
+
+      var count = db.EventLogs.ToList().Count();
+
+      Assert.AreEqual(1, count);
     }
   }
 }

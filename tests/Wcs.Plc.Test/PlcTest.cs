@@ -31,6 +31,17 @@ namespace Wcs.Plc.Test
     }
 
     [Test]
+    public void TestPlcStateLogger()
+    {
+      var plc = new Plc();
+      var db = plc.ResolveDbContext();
+
+      plc.State("test").Word("D1");
+      plc.Word("test").Set(100);
+      plc.Word("test").Get();
+    }
+
+    [Test]
     public void TestPlcCollectRunStop()
     {
       var plc = new Plc();
@@ -56,25 +67,6 @@ namespace Wcs.Plc.Test
         _ = plc.StopAsync();
       });
       plc.Run();
-    }
-
-    [Test]
-    public void TestEventLogger()
-    {
-      var plc = new Plc();
-      var db = plc.ResolveDbContext();
-
-      plc.State("hb").Word("D1").Heartbeat(0).Collect(0);
-      plc.Watch<int>("hb", value => value != 0).Event("event");
-      plc.On<int>("event", val => {
-        _ = plc.StopAsync();
-      });
-
-      plc.Run();
-
-      var count = db.EventLogs.Where(log => log.Key == "event").Count();
-
-      Assert.AreEqual(1, count);
     }
   }
 }

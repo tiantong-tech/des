@@ -27,6 +27,7 @@ namespace Wcs.Plc
     public IStateBit Bit(string key)
     {
       var state = new StateBit(_container) {
+        Name = Name,
         Key = key,
         Length = 1,
       };
@@ -39,6 +40,7 @@ namespace Wcs.Plc
     public IStateBits Bits(string key, int length = 1)
     {
       var state = new StateBits(_container) {
+        Name = Name,
         Key = key,
         Length = length,
       };
@@ -51,6 +53,7 @@ namespace Wcs.Plc
     public IStateWord Word(string key)
     {
       var state = new StateWord(_container) {
+        Name = Name,
         Key = key,
         Length = 1,
       };
@@ -63,6 +66,7 @@ namespace Wcs.Plc
     public IStateWords Words(string key, int length = 1)
     {
       var state = new StateWords(_container) {
+        Name = Name,
         Key = key,
         Length = length,
       };

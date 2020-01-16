@@ -73,7 +73,7 @@ namespace Wcs.Plc
       GetHandlers(key).Remove(id);
     }
 
-    private async Task HandleEvent(string key, string payload)
+    private Task HandleEvent(string key, string payload)
     {
       var tasks = new List<Task>();
       var handlers = GetHandlers(key).Values.ToList();
@@ -84,18 +84,19 @@ namespace Wcs.Plc
         HandlerCount = handlers.Count(),
       };
 
-      foreach(var handler in handlers) {
+      foreach (var handler in handlers) {
         tasks.Add(handler(payload));
       }
       foreach (var handler in globalHandlers) {
         tasks.Add(handler(eventArgs));
       }
 
-      try {
-        await Task.WhenAll(tasks);
-      } catch (Exception e) {
-        Console.WriteLine(e);
-      }
+      return Task.WhenAll(tasks);
+    }
+
+    public Task NextTick(Action<IEvent> handler)
+    {
+      return Task.Delay(1);
     }
 
     public IEventListener All(Func<IEventArgs, Task> handler)
