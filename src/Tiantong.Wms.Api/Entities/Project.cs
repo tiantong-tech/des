@@ -7,9 +7,6 @@ namespace Tiantong.Wms.Api
   [Table("projects")]
   public class Project : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int warehouse_id { get; set; }
 
     public string number { get; set; }

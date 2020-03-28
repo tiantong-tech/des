@@ -1,9 +1,9 @@
 <template>
-  <AsyncLoader :handler="getDataSet">
+  <AsyncLoader :handler="getEntities">
     <div class="is-flex">
       <SearchField
         :isPending="isPending"
-        @search="search"
+        @search="handleSearch"
       />
       <div class="is-flex-auto"></div>
       <a
@@ -22,7 +22,7 @@
         <th style="width: 100px">操作</th>
       </thead>
       <tbody>
-        <tr v-for="supplier in dataSet" :key="supplier.id">
+        <tr v-for="supplier in entityList" :key="supplier.id">
           <td>{{supplier.name}}</td>
           <td>{{supplier.comment}}</td>
           <td>
@@ -40,18 +40,18 @@
       </tbody>
     </Table>
     <div style="height: 1rem"></div>
-    <Pagination v-show="!isPending" v-bind="meta" @change="changePage"></Pagination>
+    <Pagination v-show="!isPending" v-bind="entities.meta" @change="handlePageChange"></Pagination>
 
     <router-view
       :warehouseId="warehouseId"
-      @refresh="refresh"
+      @refresh="handleRefresh"
     ></router-view>
   </AsyncLoader>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import DataSet from '@/mixins/data-set'
+import DataSet from '@/share/DataSet'
 import Table from '@/components/Table.vue'
 import SearchField from '@/components/SearchField.vue'
 import YesOrNoCell from '@/components/YesOrNoCell.vue'
@@ -60,12 +60,6 @@ import AsyncLoader from '@/components/AsyncLoader.vue'
 
 @Component({
   name: 'Suppliers',
-  mixins: [
-    DataSet({
-      searchApi: '/suppliers/search',
-      searchParams: (vm: any) => ({ warehouse_id: vm.warehouseId })
-    })
-  ],
   components: {
     Table,
     Pagination,
@@ -74,8 +68,17 @@ import AsyncLoader from '@/components/AsyncLoader.vue'
     AsyncLoader,
   }
 })
-export default class extends Vue {
+export default class extends DataSet {
   @Prop({ required: true })
   warehouseId!: number
+
+  public constructor() {
+    super()
+    this.api = '/suppliers/search'
+  }
+
+  get params () {
+    return { warehouse_id: this.warehouseId }
+  }
 }
 </script>

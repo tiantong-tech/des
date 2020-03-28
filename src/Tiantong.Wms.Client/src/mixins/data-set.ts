@@ -41,11 +41,21 @@ const resolveData = (options: Options) => () => {
 
   return {
     result: [],
-    entities: {},
+    // entities: {},
     meta: {
       page: 0,
       pageSize: 0,
       total: 0
+    },
+    entities: {
+      meta: {
+        page: 0,
+        pageSize: 0,
+        total: 0
+      },
+      keys: [],
+      data: {},
+      relationships: {},
     },
     params,
     isPending: false,
@@ -88,21 +98,10 @@ const resolveMethods = (options: Options): any => ({
     this.isPending = true
     try {
       const response = await Axios.post(options.searchApi, this.params)
-      const result: any = [], entities: any = {}
-      const { total, data } = response.data
 
-      this.meta.page = page
-      this.meta.pageSize = pageSize
-      this.meta.total = total
-
-      data.forEach((entity: any) => {
-        entity.$selected = false
-        result.push(entity.id)
-        entities[entity.id] = entity
-      })
-
-      this.result = result
-      this.entities = entities
+      response.data.meta.page = page
+      response.data.meta.pageSize = pageSize
+      this.entities = response.data
     } finally {
       this.isPending = false
     }

@@ -70,7 +70,7 @@ const menus: Menu[] = [
   // { icon: 'picking', text: '领料单', route: 'pickings' },
   // { icon: 'return', text: '返料单', route: 'returns' },
   { icon: 'inventory', text: '盘点', route: 'inventory' },
-  { icon: 'item', text: '库存', route: 'items' },
+  { icon: 'item', text: '库存', route: 'goods' },
   { icon: 'project', text: '工程', route: 'projects' },
   // { icon: 'category', text: '货类', route: 'item-categories' },
   // { icon: 'area', text: '区域', route: 'areas' },

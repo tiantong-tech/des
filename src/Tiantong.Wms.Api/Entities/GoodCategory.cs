@@ -6,9 +6,6 @@ namespace Tiantong.Wms.Api
   [Table("good_categories")]
   public class GoodCategory : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int warehouse_id { get; set; }
 
     public string number { get; set; }

@@ -8,9 +8,6 @@ namespace Tiantong.Wms.Api
   [Table("goods")]
   public class Good : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int warehouse_id { get; set; }
 
     public int[] category_ids { get; set; } = new int[] {};
@@ -24,8 +21,15 @@ namespace Tiantong.Wms.Api
     public bool is_enabled { get; set; } = true;
 
     public DateTime created_at { get; set; } = DateTime.Now;
-    // [ForeignKey("item_id")]
-    // public List<Stock> stocks { get; set; }
 
+    public int[] item_ids { get; set; } = new int[] {};
+
+    public int[] stock_ids { get; set; } = new int[] {};
+
+    // [ForeignKey("good_id")]
+    // public List<Item> items { get; set; }
+
+    // [ForeignKey("good_id")]
+    // public List<Stock> stocks { get; set; }
   }
 }

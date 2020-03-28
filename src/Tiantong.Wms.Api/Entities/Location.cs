@@ -6,9 +6,6 @@ namespace Tiantong.Wms.Api
   [Table("locations")]
   public class Location : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int warehouse_id { get; set; }
 
     public int area_id { get; set; }

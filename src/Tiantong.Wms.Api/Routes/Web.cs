@@ -59,11 +59,11 @@ namespace Tiantong.Wms.Api
       Post("/orders/categories/update", "OrderCategory.Update");
       Post("/orders/categories/search", "OrderCategory.Search");
 
-      Post("/items/create", "Item.Create");
-      Post("/items/delete", "Item.Delete");
-      Post("/items/update", "Item.Update");
-      Post("/items/search", "Item.Search");
-      Post("/items/find", "Item.Find");
+      Post("/goods/create", "Good.Create");
+      Post("/goods/delete", "Good.Delete");
+      Post("/goods/update", "Good.Update");
+      Post("/goods/search", "Good.Search");
+      Post("/goods/find", "Good.Find");
 
       Post("/suppliers/create", "Supplier.Create");
       Post("/suppliers/delete", "Supplier.Delete");
@@ -95,8 +95,8 @@ namespace Tiantong.Wms.Api
       // Post("/orders/returns/search", "Order.ReturnSearch");
       // Post("/orders/returns/submit", "Order.ReturnSubmit");
 
-      Post("/stocks/search", "Stock.Search");
-      Post("/stocks/records/search", "StockRecord.Search");
+      // Post("/stocks/search", "Stock.Search");
+      // Post("/stocks/records/search", "StockRecord.Search");
 
     }
   }

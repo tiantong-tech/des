@@ -7,9 +7,6 @@ namespace Tiantong.Wms.Api
   [Table("stock_records")]
   public class StockRecord : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int stock_id { get; set; }
 
     public string order_type { get; set; }

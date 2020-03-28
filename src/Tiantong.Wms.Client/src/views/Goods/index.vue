@@ -1,9 +1,9 @@
 <template>
-  <AsyncLoader :handler="getDataSet">
+  <AsyncLoader :handler="getEntities">
     <div class="is-flex">
       <SearchField
         :isPending="isPending"
-        @search="search"
+        @search="handleSearch"
       />
       <div class="is-flex-auto"></div>
       <a
@@ -25,10 +25,10 @@
         <th style="width: 100px">操作</th>
       </thead>
       <tbody>
-        <tr v-for="item in dataSet" :key="item.id">
+        <tr v-for="item in entityList" :key="item.id">
           <td>{{item.number}}</td>
           <td>{{item.name}}</td>
-          <td>{{item.stocks.reduce((s, stock) => s += stock.quantity, 0)}}</td>
+          <!-- <td>{{item.stocks.reduce((s, stock) => s += stock.quantity, 0)}}</td> -->
           <td>{{item.specification}}</td>
           <td>{{item.comment}}</td>
           <td>
@@ -46,18 +46,18 @@
       </tbody>
     </Table>
     <div style="height: 1rem"></div>
-    <Pagination v-show="!isPending" v-bind="meta" @change="changePage"></Pagination>
+    <Pagination v-show="!isPending" v-bind="entities.meta" @change="handlePageChange"></Pagination>
 
     <router-view
       :warehouseId="warehouseId"
-      @refresh="refresh"
+      @refresh="handleRefresh"
     ></router-view>
   </AsyncLoader>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import DataSet from '@/mixins/data-set'
+import DataSet from '@/share/DataSet'
 import Table from '@/components/Table.vue'
 import SearchField from '@/components/SearchField.vue'
 import YesOrNoCell from '@/components/YesOrNoCell.vue'
@@ -67,12 +67,6 @@ import DateWrapper from '@/components/wrappers/DateWrapper.vue'
 
 @Component({
   name: 'Stocks',
-  mixins: [
-    DataSet({
-      searchApi: '/items/search',
-      searchParams: (vm: any) => ({ warehouse_id: vm.warehouseId })
-    })
-  ],
   components: {
     Table,
     Pagination,
@@ -82,8 +76,19 @@ import DateWrapper from '@/components/wrappers/DateWrapper.vue'
     DateWrapper
   }
 })
-export default class extends Vue {
+export default class extends DataSet {
   @Prop({ required: true })
   warehouseId!: number
+
+  get params () {
+    return {
+      warehouse_id: this.warehouseId
+    }
+  }
+
+  public constructor() {
+    super()
+    this.api = '/goods/search'
+  }
 }
 </script>

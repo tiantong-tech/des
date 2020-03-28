@@ -7,9 +7,6 @@ namespace Tiantong.Wms.Api
   [Table("payments")]
   public class Payment : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public double amount { get; set; }
 
     public string comment { get; set; } = "";

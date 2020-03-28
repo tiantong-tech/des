@@ -6,9 +6,6 @@ namespace Tiantong.Wms.Api
   [Table("stocks")]
   public class Stock : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int warehouse_id { get; set; }
 
     public int good_id { get; set; }

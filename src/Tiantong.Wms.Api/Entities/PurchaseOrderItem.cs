@@ -7,9 +7,6 @@ namespace Tiantong.Wms.Api
   [Table("purchase_order_items")]
   public class PurchaseOrderItem : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int good_id { get; set; }
 
     public int item_id { get; set; }

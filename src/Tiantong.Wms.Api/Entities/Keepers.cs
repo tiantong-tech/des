@@ -6,9 +6,6 @@ namespace Tiantong.Wms.Api
   [Table("keepers")]
   public class Keeper : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public int warehouse_id { get; set; }
 
     public int user_id { get; set; }

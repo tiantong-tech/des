@@ -328,6 +328,8 @@ namespace Tiantong.Wms.Api
       }
 
       _db.SaveChanges();
+      var groups = _db.Stocks.GroupBy(stock => stock.good_id).ToArray();
+
     }
 
     private void InsertStockRecords()

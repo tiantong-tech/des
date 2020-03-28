@@ -8,9 +8,6 @@ namespace Tiantong.Wms.Api
   [Table("users")]
   public class User : Entity
   {
-    [Key]
-    public int id { get; set; }
-
     public string email { get; set; }
 
     [JsonIgnore]

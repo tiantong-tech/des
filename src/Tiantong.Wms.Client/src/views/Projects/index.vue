@@ -1,9 +1,9 @@
 <template>
-  <AsyncLoader :handler="getDataSet">
+  <AsyncLoader :handler="getEntities">
     <div class="is-flex">
       <SearchField
         :isPending="isPending"
-        @search="search"
+        @search="handleSearch"
       />
       <div class="is-flex-auto"></div>
       <a
@@ -26,7 +26,7 @@
         <th style="width: 100px">操作</th>
       </thead>
       <tbody>
-        <tr v-for="project in dataSet" :key="project.id">
+        <tr v-for="project in entityList" :key="project.id">
           <td>{{project.number}}</td>
           <td>{{project.name}}</td>
           <td>{{project.comment}}</td>
@@ -54,18 +54,18 @@
       </tbody>
     </Table>
     <div style="height: 1rem"></div>
-    <Pagination v-show="!isPending" v-bind="meta" @change="changePage"></Pagination>
+    <Pagination v-show="!isPending" v-bind="entities.meta" @change="handlePageChange"></Pagination>
 
     <router-view
       :warehouseId="warehouseId"
-      @refresh="refresh"
+      @refresh="handleRefresh"
     ></router-view>
   </AsyncLoader>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import DataSet from '@/mixins/data-set'
+import DataSet from '@/share/DataSet'
 import SearchField from '@/components/SearchField.vue'
 import YesOrNoCell from '@/components/YesOrNoCell.vue'
 import Pagination from '@/components/Pagination.vue'
@@ -75,12 +75,6 @@ import Table from '@/components/Table.vue'
 
 @Component({
   name: 'Projects',
-  mixins: [
-    DataSet({
-      searchApi: '/projects/search',
-      searchParams: (vm: any) => ({ warehouse_id: vm.warehouseId })
-    })
-  ],
   components: {
     Table,
     Pagination,
@@ -90,8 +84,20 @@ import Table from '@/components/Table.vue'
     DateWrapper
   }
 })
-export default class extends Vue {
+export default class extends DataSet {
   @Prop({ required: true })
   warehouseId!: number
+
+  get params () {
+    return {
+      warehouse_id: this.warehouseId
+    }
+  }
+  
+  public constructor() {
+    super()
+    this.api = '/projects/search'
+  }
+
 }
 </script>

@@ -14,6 +14,18 @@ namespace Tiantong.Wms.Api
       _orderItems = orderItems;
     }
 
+    public bool HasGood(int goodId)
+    {
+      return Table.Any(stock => stock.good_id == goodId);
+    }
+
+    public Stock[] GetByGoods(Good[] goods)
+    {
+      var ids = goods.SelectMany(good => good.stock_ids);
+
+      return Table.Where(stock => ids.Contains(stock.id)).ToArray();
+    }
+
     public Stock GetOrAdd(int warehouseId, int itemId, int locationId)
     {
       var stock = Table.Where(sk =>
