@@ -1,0 +1,4 @@
+// namespace Namei.Wcs.Aggregates
+// {
+
+// }

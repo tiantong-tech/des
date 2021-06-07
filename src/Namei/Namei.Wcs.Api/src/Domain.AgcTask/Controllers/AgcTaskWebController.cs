@@ -1,7 +1,7 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Midos.Domain;
 using Namei.Wcs.Api;
+using System.Threading.Tasks;
 
 namespace Namei.Wcs.Aggregates
 {
