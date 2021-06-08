@@ -87,6 +87,14 @@ namespace Namei.Wcs.Aggregates
 
         var result =  _rcs.CreateTask(param).GetAwaiter().GetResult();
 
+        while (true) {
+          if (_rcsMap.HasTask(result.Code)) {
+            break;
+          }
+
+          Task.Delay(300).GetAwaiter().GetResult();
+        }
+
         return result;
       }
     }
