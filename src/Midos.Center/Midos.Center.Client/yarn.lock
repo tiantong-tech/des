@@ -1038,19 +1038,19 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@midos/core@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@midos/core/-/core-0.0.9.tgz#8143395b4c8e6f1c435e9f4949414d04e8a79f54"
-  integrity sha512-1cizZYbW2tgudDPjqYwNkyPIdXd0WD7REOdPwczA4LhgKg1OKEZQmuTs5kqHX3XWpfL6d1VzwNYzAjjzu1fSEw==
+"@midos/core@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@midos/core/-/core-0.0.14.tgz#301ef947ad46f38fee3f0e31ab2fc9eff0669b57"
+  integrity sha512-Mfr2vK95G1fkai2EZxJ27u6lGcXijrY7XR4fOTYaMbVvzzYsvLfZ55uMOXZYsj6p0WZ3sslL0GhQtc+MZA62oA==
   dependencies:
     "@abraham/reflection" "^0.7.0"
     axios "^0.21.1"
     tsyringe "^4.4.0"
 
-"@midos/vue-ui@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@midos/vue-ui/-/vue-ui-0.0.9.tgz#becc3a6ad37a6ba301501acaf8d82260b1593319"
-  integrity sha512-+evzVwHe4XkAbRmSZTtdo5ANDRIYDd0m15png/D/FzAmIwNwV0OJufTaSpXy4ABTDsVOw0daFS3WuzYC6Rs0Lg==
+"@midos/vue-ui@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@midos/vue-ui/-/vue-ui-0.0.14.tgz#dc0aafaea2bd82783b10b6ab3717a23abd6370db"
+  integrity sha512-OoOHQPby2gjJRM9vXLdkUelATocqYoSm7Jw2A6x6L/FViD/KHZjQInIpzXIPq+h5Xc5CjIiuK9K4D1Q2kYVYCg==
   dependencies:
     bulma "^0.9.2"
 
@@ -8875,7 +8875,7 @@ querystring@0.2.0:
 
 querystringify@^2.1.1:
   version "2.2.0"
-  resolved "https://registry.npmjs.org/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
@@ -9198,7 +9198,7 @@ require-main-filename@^2.0.0:
 
 requires-port@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+  resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
 resolve-cwd@^2.0.0:
@@ -10672,9 +10672,9 @@ url-loader@^2.2.0:
     schema-utils "^2.5.0"
 
 url-parse@^1.4.3, url-parse@^1.4.7:
-  version "1.4.7"
-  resolved "https://registry.npmjs.org/url-parse/-/url-parse-1.4.7.tgz#a8a83535e8c00a316e403a5db4ac1b9b853ae278"
-  integrity sha512-d3uaVyzDB9tQoSXFvuSUNFibTd9zxd2bkVrDRvF5TmvWWQwqE4lgYJ5m+x1DbecWkw+LK4RNl2CU1hHuOKPVlg==
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.10.tgz#9d3c2f736c1d75dd3bd2be507dcc111f1e2ea9c1"
+  integrity sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
